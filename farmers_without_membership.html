@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>farmers with membership</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="logo.png" type="image/png">
+
+<!-- PapaParse -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+<style>
+body{
+  font-family:Arial, sans-serif;
+  background:#f4f6f8;
+  margin:0;
+  padding:12px;
+}
+h2{
+  margin:5px 0 10px;
+  font-size:20px;
+}
+input{
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+#loading{
+  margin-top:8px;
+  font-size:14px;
+  color:#666;
+}
+
+/* TABLE WRAPPER */
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  background:#fff;
+  border-radius:6px;
+  margin-top:10px;
+}
+
+/* TABLE */
+table{
+  width:100%;
+  min-width:700px;
+  border-collapse:collapse;
+  display:none;
+}
+th,td{
+  padding:8px;
+  border:1px solid #ddd;
+  font-size:14px;
+  white-space:nowrap;
+}
+th{
+  background:#ffe600;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+/* PAGINATION */
+#pagination{
+  display:none;
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+#pagination button{
+  padding:10px 14px;
+  font-size:14px;
+  border:none;
+  border-radius:6px;
+  background:#ffe600;
+  cursor:pointer;
+}
+#pagination button:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+/* MOBILE TUNING */
+@media(max-width:600px){
+  h2{font-size:18px}
+  th,td{font-size:13px;padding:6px}
+}
+</style>
+</head>
+
+<body>
+
+<h2>farmers with membership</h2>
+
+<input id="searchBox" placeholder="Search any field..." autocomplete="off">
+<div id="loading">Loading data… first time may take few seconds</div>
+
+<div class="table-wrap">
+<table id="table">
+  <thead></thead>
+  <tbody></tbody>
+</table>
+</div>
+
+<div id="pagination"></div>
+
+<script>
+const SHEET_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vSUJGuRBmgY0IKvnakhrgXguTFEwg1AaNpPhv4SkryaMi8QSG3bjDSblcTffSvegrJ7ubGV4tr_cOVe/pub?gid=0&single=true&output=csv";
+
+const ROWS_PER_PAGE = 20;
+
+let headers=[], allRows=[], filteredRows=[];
+let currentPage=1;
+
+/* LOAD DATA WITH CACHE */
+if(localStorage.procurementData){
+  const c=JSON.parse(localStorage.procurementData);
+  headers=c.headers;
+  allRows=c.rows;
+  init();
+}else{
+  fetch(SHEET_URL)
+    .then(r=>r.text())
+    .then(csv=>{
+      Papa.parse(csv,{
+        header:true,
+        skipEmptyLines:true,
+        worker:true,
+        complete:res=>{
+          headers=res.meta.fields;
+          allRows=res.data;
+          localStorage.procurementData =
+            JSON.stringify({headers,rows:allRows});
+          init();
+        }
+      });
+    });
+}
+
+function init(){
+  createHeader();
+  loading.innerText="Loaded. Type to search";
+}
+
+/* HEADER */
+function createHeader(){
+  const tr=document.createElement("tr");
+  headers.forEach(h=>{
+    const th=document.createElement("th");
+    th.textContent=h;
+    tr.appendChild(th);
+  });
+  document.querySelector("thead").appendChild(tr);
+}
+
+/* SEARCH WITH DEBOUNCE */
+let timer;
+searchBox.addEventListener("input",()=>{
+  clearTimeout(timer);
+  timer=setTimeout(searchData,300);
+});
+
+function searchData(){
+  const key=searchBox.value.toLowerCase();
+  if(!key){
+    table.style.display="none";
+    pagination.style.display="none";
+    return;
+  }
+  filteredRows=allRows.filter(r=>
+    Object.values(r).some(v=>
+      (v||"").toLowerCase().includes(key)
+    )
+  );
+  currentPage=1;
+  renderPage();
+}
+
+/* PAGINATION */
+function renderPage(){
+  const start=(currentPage-1)*ROWS_PER_PAGE;
+  const end=start+ROWS_PER_PAGE;
+  renderTable(filteredRows.slice(start,end));
+  renderPagination();
+}
+
+function renderTable(data){
+  const tbody=document.querySelector("tbody");
+  tbody.innerHTML="";
+  data.forEach(r=>{
+    const tr=document.createElement("tr");
+    headers.forEach(h=>{
+      const td=document.createElement("td");
+      td.textContent=r[h]||"";
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.style.display="table";
+}
+
+function renderPagination(){
+  const totalPages=
+    Math.ceil(filteredRows.length/ROWS_PER_PAGE);
+  pagination.innerHTML=`
+    <button ${currentPage==1?"disabled":""}
+      onclick="changePage(-1)">⬅ Prev</button>
+    <span>Page ${currentPage} / ${totalPages}
+      (${filteredRows.length} results)</span>
+    <button ${currentPage==totalPages?"disabled":""}
+      onclick="changePage(1)">Next ➡</button>
+  `;
+  pagination.style.display="flex";
+}
+
+function changePage(step){
+  currentPage+=step;
+  renderPage();
+}
+</script>
+
+</body>
+</html>
