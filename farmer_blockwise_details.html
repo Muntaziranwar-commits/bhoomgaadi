@@ -1,210 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="logo.png" type="image/png">
-  <title>BLOCKWISE FARMER DATA Bhoomgaadi Organic Farmer's Producer Co. Ltd.</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="logo.png" type="image/png">
+<title>Farmer Data | Bhoomgaadi Organic FPC</title>
 
-  <style>
-    :root {
-      --primary: #95cebb;      /* Bhoomgaadi mint green */
-      --dark: #1b1b1b;
-      --text: #333;
-      --white: #ffffff;
-    }
+<style>
+:root{
+  --primary:#95cebb;
+  --dark:#1b1b1b;
+  --text:#333;
+  --white:#fff;
+  --max-width:1200px;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',Tahoma,sans-serif;
+}
 
-    body {
-      background: var(--white);   /* Light green background like data.html */
-      color: var(--text);
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+body{
+  background:var(--white);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
 
-    .content {
-      flex: 1;
-    }
+/* ---------- NAVBAR ---------- */
+.navbar{
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(6px);
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
 
-    /* ==========================
-       NAVBAR
-       ========================== */
-       .navbar{
-      background:rgba(255,255,255,0.92);
-      backdrop-filter: blur(6px);
-      position:sticky;
-      top:0;
-      z-index:50;
-      box-shadow:var(--shadow-sm);
-    }
+.nav-inner{
+  max-width:var(--max-width);
+  margin:auto;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
 
-    .nav-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      max-width:var(--max-width);
-      margin:0 auto;
-      padding:14px 20px;
-    }
+.logo-area{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
 
-    .logo-area{
-      display:flex;
-      gap:14px;
-      align-items:center;
-    }
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  object-fit:cover;
+}
 
-    .logo{
-      width:64px;
-      height:64px;
-      border-radius:50%;
-      object-fit:cover;
-      border:3px solid rgba(0,0,0,0.06);
-      background:linear-gradient(180deg,#fff,#f7f7f7);
-      box-shadow:0 6px 18px rgba(0,0,0,0.04);
-    }
+.brand-name{
+  font-weight:700;
+  font-size:clamp(1rem,2.5vw,1.15rem);
+}
 
-    .brand-name{
-      font-weight:700;
-      color:var(--accent-600);
-      font-size:1.12rem;
-      letter-spacing:0.2px;
-    }
+/* NAV LINKS */
+.nav-links{
+  list-style:none;
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
 
-    .nav-links{
-      display:flex;
-      gap:18px;
-      align-items:center;
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
+.nav-links a{
+  text-decoration:none;
+  color:#333;
+  font-weight:600;
+  padding:6px 10px;
+  border-radius:6px;
+}
 
-    .nav-links a{
-      font-weight:600;
-      color:var(--muted);
-      text-decoration:none;
-      padding:8px 10px;
-      border-radius:8px;
-      transition:all var(--trans);
-    }
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+  width:100%;
+}
 
-    .nav-links a:hover,
-    .nav-links a:focus{
-      color:var(--text);
-      background:transparent;
-      transform:translateY(-1px);
-      box-shadow:0 6px 16px rgba(0,0,0,0.04);
-    }
+.sections{
+  max-width:var(--max-width);
+  margin:auto;
+  padding:40px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
 
-    /* Section container */
-    .sections {
-      padding: 40px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-    }
+/* CARD */
+.link-card{
+  background:var(--white);
+  padding:32px 20px;
+  border-radius:14px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+  transition:0.3s ease;
+}
 
-    /* Card style (same as data.html) */
-    .link-card {
-      background-color: var(--white);
-      padding: 18px 20px;
-      border-radius: 10px;
-      width: 280px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      transition: 0.3s;
-    }
+.link-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+}
 
-    .link-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.22);
-    }
+.link-card h2 a{
+  text-decoration:none;
+  color:var(--dark);
+  font-size:clamp(1.1rem,3vw,1.4rem);
+  font-weight:700;
+}
 
-    .link-card h2 a {
-      text-decoration: none;
-      color: #1b1b1b;
-      font-size: 24px;
-      font-weight: bold;
-    }
+/* ---------- FOOTER ---------- */
+footer{
+  text-align:center;
+  padding:18px 12px;
+  background:#2e7d32;
+  color:#fff;
+  font-size:clamp(0.85rem,2.5vw,0.95rem);
+}
 
-    .link-card h2 a:hover {
-      color: #ff9800;
-    }
+/* ---------- SMALL DEVICES ---------- */
+@media(max-width:480px){
+  .nav-inner{
+    justify-content:center;
+    text-align:center;
+  }
+  .nav-links{
+    justify-content:center;
+  }
+}
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #2e7d32;
-      color: #fff;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .link-card {
-        width: 100%;
-      }
-    }
-  </style>
+/* ---------- LARGE SCREENS ---------- */
+@media(min-width:1600px){
+  .sections{
+    gap:40px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<div class="content">
-
-  <header class="navbar" role="banner">
-    <div class="nav-inner">
-      <div class="logo-area">
-        <img src="logo.png" alt="Bhoomgaadi logo" class="logo">
-        <div class="brand-name">Bhoomgaadi Organic<br><small style="font-weight:600;font-size:0.85rem;color:var(--muted)">Farmer's Producer Co. Ltd.</small></div>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="logo-area">
+      <img src="logo.png" class="logo" alt="Bhoomgaadi">
+      <div class="brand-name">
+        Bhoomgaadi Organic<br>
+        <small>Farmer's Producer Co. Ltd.</small>
       </div>
-
-      <nav aria-label="Main navigation">
-        <ul class="nav-links" role="menubar">
-          <li role="none"><a role="menuitem" href="index.html">Home</a></li>
-          <li role="none"><a role="menuitem" href="projects.html">Projects</a></li>
-          <li role="none"><a role="menuitem" href="products.html">Products</a></li>
-          <li role="none"><a role="menuitem" href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
     </div>
-  </header>
 
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="content">
   <section class="sections">
-
     <div class="link-card">
-      <h2><a href="block_Dantewada.html">DANTEWADA</a></h2>
+      <h2><a href="farmers_with_membership.html">Farmers with Membership</a></h2>
     </div>
 
     <div class="link-card">
-      <h2><a href="block_Geedam.html">GEEDAM</a></h2>
+      <h2><a href="farmers_without_membership.html">Farmers without Membership</a></h2>
     </div>
-
-    <div class="link-card">
-      <h2><a href="block_katekalyan.html">KATEKALYAN</a></h2>
-    </div>
-
-    <div class="link-card">
-      <h2><a href="block_kuakonda.html">KUAKONDA</a></h2>
-    </div>
-
-    <div class="link-card">
-      <h2><a href="bfarmer_ngo.html">Farmer not NGO</a></h2>
-    </div>
-
   </section>
-
 </div>
 
 <footer>
@@ -212,5 +192,4 @@
 </footer>
 
 </body>
-
 </html>
