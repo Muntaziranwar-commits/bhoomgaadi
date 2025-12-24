@@ -85,7 +85,7 @@ th{
   cursor:not-allowed;
 }
 
-/* MOBILE TUNING */
+/* MOBILE */
 @media(max-width:600px){
   h2{font-size:18px}
   th,td{font-size:13px;padding:6px}
@@ -117,6 +117,16 @@ const ROWS_PER_PAGE = 20;
 
 let headers=[], allRows=[], filteredRows=[];
 let currentPage=1;
+
+/* ==========================
+   MASK ACCOUNT NUMBER
+========================== */
+function maskAccountNumber(acc){
+  if(!acc) return "";
+  acc = acc.toString().replace(/\s+/g,"");
+  if(acc.length<=4) return acc;
+  return "X".repeat(acc.length-4) + acc.slice(-4);
+}
 
 /* LOAD DATA WITH CACHE */
 if(localStorage.procurementData){
@@ -159,7 +169,7 @@ function createHeader(){
   document.querySelector("thead").appendChild(tr);
 }
 
-/* SEARCH WITH DEBOUNCE */
+/* SEARCH */
 let timer;
 searchBox.addEventListener("input",()=>{
   clearTimeout(timer);
@@ -197,7 +207,14 @@ function renderTable(data){
     const tr=document.createElement("tr");
     headers.forEach(h=>{
       const td=document.createElement("td");
-      td.textContent=r[h]||"";
+
+      /* 🔐 MASK ACCOUNT NUMBER COLUMN */
+      if(h.trim().toLowerCase()==="beneficiary account no"){
+        td.textContent = maskAccountNumber(r[h]);
+      }else{
+        td.textContent = r[h] || "";
+      }
+
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
