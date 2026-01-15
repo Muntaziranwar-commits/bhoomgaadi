@@ -4,41 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="logo.png" type="image/png">
-<title>Farmer Data | Bhoomgaadi Organic FPC</title>
+<title>Farmer Data - Bhoomgaadi Organisation </title>
 
 <style>
+/* ==========================
+   CSS VARIABLES (FIXED)
+========================== */
 :root{
-  --primary:#95cebb;
-  --dark:#1b1b1b;
-  --text:#333;
-  --white:#fff;
+  --accent-600:#2e7d32;
+  --text:#222;
+  --muted:#555;
+  --shadow-sm:0 6px 18px rgba(0,0,0,0.08);
   --max-width:1200px;
+  --trans:.25s ease;
 }
 
 /* RESET */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Segoe UI',Tahoma,sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-  background:var(--white);
+  font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
+  background:#f4f4f4;
   color:var(--text);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
+  line-height:1.6;
 }
 
-/* ---------- NAVBAR ---------- */
+/* ==========================
+   NAVBAR
+========================== */
 .navbar{
-  background:rgba(255,255,255,0.95);
+  background:rgba(255,255,255,.95);
   backdrop-filter:blur(6px);
   position:sticky;
   top:0;
   z-index:50;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  box-shadow:var(--shadow-sm);
 }
 
 .nav-inner{
@@ -49,7 +48,6 @@ body{
   align-items:center;
   justify-content:space-between;
   gap:16px;
-  flex-wrap:wrap;
 }
 
 .logo-area{
@@ -59,18 +57,18 @@ body{
 }
 
 .logo{
-  width:56px;
-  height:56px;
+  width:clamp(52px,8vw,64px);
+  height:clamp(52px,8vw,64px);
   border-radius:50%;
   object-fit:cover;
 }
 
 .brand-name{
   font-weight:700;
-  font-size:clamp(1rem,2.5vw,1.15rem);
+  font-size:clamp(.95rem,2.5vw,1.1rem);
+  color:var(--accent-600);
 }
 
-/* NAV LINKS */
 .nav-links{
   list-style:none;
   display:flex;
@@ -80,73 +78,115 @@ body{
 
 .nav-links a{
   text-decoration:none;
-  color:#333;
   font-weight:600;
-  padding:6px 10px;
-  border-radius:6px;
+  color:var(--muted);
+  padding:8px 10px;
+  border-radius:8px;
 }
 
-/* ---------- CONTENT ---------- */
-.content{
-  flex:1;
-  width:100%;
+.nav-links a:hover{
+  color:var(--text);
 }
 
+/* ==========================
+   HERO (OPTIONAL SAFE)
+========================== */
+.hero{
+  padding:clamp(3rem,8vw,5rem) 20px;
+  text-align:center;
+  background:#fff;
+}
+
+.hero h1{
+  font-size:clamp(2rem,6vw,3rem);
+}
+
+.hero p{
+  font-size:clamp(1rem,2.5vw,1.2rem);
+  color:#555;
+}
+
+/* ==========================
+   SECTIONS
+========================== */
 .sections{
+  padding:clamp(2rem,6vw,3rem) 20px;
+  display:flex;
+  flex-direction:column;
+  gap:40px;
   max-width:var(--max-width);
   margin:auto;
-  padding:40px 20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
 }
 
-/* CARD */
+.section{
+  background:#fff;
+  padding:clamp(1.2rem,4vw,2rem);
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+.section h2{
+  font-size:clamp(1.3rem,4vw,1.75rem);
+  margin-bottom:20px;
+  border-left:4px solid #ff9800;
+  padding-left:10px;
+}
+
+.links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+}
+
 .link-card{
-  background:var(--white);
-  padding:32px 20px;
-  border-radius:14px;
-  text-align:center;
-  box-shadow:0 4px 12px rgba(0,0,0,0.18);
-  transition:0.3s ease;
+  flex:1 1 220px;
+  background:#fafafa;
+  padding:16px;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  transition:.25s ease;
 }
 
 .link-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  transform:translateY(-4px);
 }
 
-.link-card h2 a{
+.link-card a{
+  display:block;
   text-decoration:none;
-  color:var(--dark);
-  font-size:clamp(1.1rem,3vw,1.4rem);
+  color:#333;
   font-weight:700;
+  margin-bottom:6px;
 }
 
-/* ---------- FOOTER ---------- */
-footer{
+/* ==========================
+   FOOTER
+========================== */
+.footer{
+  margin-top:8rem;
+  padding:1.2rem;
   text-align:center;
-  padding:18px 12px;
   background:#2e7d32;
   color:#fff;
-  font-size:clamp(0.85rem,2.5vw,0.95rem);
+  font-size:clamp(.85rem,2.5vw,1rem);
 }
 
-/* ---------- SMALL DEVICES ---------- */
-@media(max-width:480px){
+/* ==========================
+   MOBILE FIXES
+========================== */
+@media(max-width:768px){
   .nav-inner{
-    justify-content:center;
-    text-align:center;
+    flex-direction:column;
+    align-items:flex-start;
   }
-  .nav-links{
-    justify-content:center;
-  }
-}
 
-/* ---------- LARGE SCREENS ---------- */
-@media(min-width:1600px){
-  .sections{
-    gap:40px;
+  .nav-links{
+    width:100%;
+    justify-content:flex-start;
+  }
+
+  .links{
+    flex-direction:column;
   }
 }
 </style>
@@ -154,13 +194,16 @@ footer{
 
 <body>
 
+<!-- NAVBAR -->
 <header class="navbar">
   <div class="nav-inner">
     <div class="logo-area">
-      <img src="logo.png" class="logo" alt="Bhoomgaadi">
+      <img src="logo.png" class="logo" alt="Logo">
       <div class="brand-name">
         Bhoomgaadi Organic<br>
-        <small>Farmer's Producer Co. Ltd.</small>
+        <small style="font-weight:600;font-size:.85rem;color:var(--muted)">
+          Farmer's Producer Co. Ltd.
+        </small>
       </div>
     </div>
 
@@ -175,20 +218,24 @@ footer{
   </div>
 </header>
 
-<div class="content">
-  <section class="sections">
-    <div class="link-card">
-      <h2><a href="farmers_with_membership.html">Farmers with Membership</a></h2>
+<!-- CONTENT -->
+<section class="sections">
+  <div class="section">
+    <h2>FARMER MEMBERSHIP BLOCKWISE</h2>
+    <div class="links">
+      <div class="link-card">
+        <a href="Dantewada.html">Dantewada</a>
+        <a href="Kuakonda.html">Kuakonda</a>
+        <a href="Katekalyan.html">Katekalyan</a>
+        <a href="Geedam.html">Geedam</a>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="link-card">
-      <h2><a href="farmers_without_membership.html">Farmers without Membership</a></h2>
-    </div>
-  </section>
-</div>
-
-<footer>
-  &copy; 2025 Bhoomgaadi. All rights reserved.
+<!-- FOOTER -->
+<footer class="footer">
+  © 2025 Bhoomgaadi Organic Farmer's Producer Company – All Rights Reserved.
 </footer>
 
 </body>
